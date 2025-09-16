@@ -27,6 +27,11 @@ require __DIR__ . '/phpmailer/src/Exception.php';
 require __DIR__ . '/phpmailer/src/PHPMailer.php';
 require __DIR__ . '/phpmailer/src/SMTP.php';
 
+// Load .env variables
+require __DIR__ . '/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 // Get POSTed JSON
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -55,14 +60,14 @@ if (!$userResult || $userResult->num_rows === 0) {
 $mail = new PHPMailer(true);
 try {
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = $_ENV['SMTP_HOST'];
     $mail->SMTPAuth = true;
-    $mail->Username = 'mohamed.lahouel@esprit.tn'; // your Gmail
-    $mail->Password = 'jnixyhivxhmeouvj'; // your new App Password
+    $mail->Username = $_ENV['SMTP_USER'];
+    $mail->Password = $_ENV['SMTP_PASS'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
+    $mail->Port = $_ENV['SMTP_PORT'];
 
-    $mail->setFrom('mohamed.lahouel@esprit.tn', 'MailDoctor'); // updated sender name
+    $mail->setFrom($_ENV['SMTP_USER'], 'MailDoctor'); // sender from .env
     $mail->addAddress($email);
 
     $mail->isHTML(true);
@@ -89,4 +94,3 @@ try {
 
 $conn->close();
 echo json_encode($response);
-?>
