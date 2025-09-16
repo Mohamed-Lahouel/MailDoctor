@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Code</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom right, #6b7280, #9ca3af, #d1d5db);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .verify-card {
+      background: rgba(243, 244, 246, 0.95);
+      border-radius: 1rem;
+      box-shadow: 0 1rem 3rem rgba(0,0,0,0.25);
+      max-width: 900px;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    /* Image side */
+    .verify-card .image-side {
+      flex: 1 1 45%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background-color: #f3f4f6;
+    }
+
+    .verify-card .image-side img {
+      width: 100%;
+      max-width: 550px;
+      border-radius: 0.75rem;
+      object-fit: cover;
+    }
+
+    /* Form side */
+    .verify-card .form-side {
+      flex: 1 1 55%;
+      padding: 2.5rem;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(to right, #ef4444, #b91c1c);
+      color: white;
+    }
+
+    .btn-gradient:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s;
+    }
+
+    .text-accent {
+      color: #ef4444;
+    }
+
+    label {
+      color: #374151;
+    }
+
+    .form-control {
+      background-color: #f9fafb;
+      border: 1px solid #d1d5db;
+    }
+
+    .form-control:focus {
+      border-color: #9ca3af;
+      box-shadow: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .verify-card {
+        flex-direction: column;
+      }
+      .verify-card .image-side {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+      }
+      .verify-card .image-side img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="verify-card">
+  <!-- Image side -->
+  <div class="image-side">
+    <img src="image.png" alt="Verify Illustration">
+  </div>
+
+  <!-- Form side -->
+  <div class="form-side">
+    <h2 class="text-center mb-3 fw-bold text-gray-800">Verify Code</h2>
+    <p class="text-center text-gray-600 mb-4">
+      Enter the verification code sent to your email
+    </p>
+
+    <!-- Verification Form -->
+    <form (ngSubmit)="onVerify()">
+      <div class="mb-3">
+        <label for="code" class="form-label">Verification Code</label>
+        <input type="text" id="code" class="form-control"
+               [(ngModel)]="code" name="code"
+               placeholder="Enter your code" required>
+      </div>
+
+      <!-- Verify Button -->
+      <button type="submit" class="btn btn-gradient w-100 fw-bold mb-4 py-2">
+        Verify Code
+      </button>
+    </form>
+
+    <!-- Back to Forgot -->
+    <p class="text-center text-gray-600 mb-0">
+  <span class="text-accent fw-semibold cursor-pointer" (click)="goToForgot()">
+    Back to Forgot Password
+  </span>
+</p>
+
+  </div>
+</div>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

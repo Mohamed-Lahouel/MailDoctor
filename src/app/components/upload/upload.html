@@ -1,0 +1,67 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow-lg border-0 rounded-3" style="background-color: #fff5f5;">
+        <div class="card-body p-5">
+          
+          <!-- Title -->
+          <h2 class="fw-bold text-center mb-4 text-dark border-bottom pb-3">
+            Upload Datasets
+          </h2>
+
+          <!-- Upload Form -->
+          <form>
+            <div class="mb-4">
+              <label for="fileUpload" class="form-label fw-semibold text-danger">
+                Choose CSV Files
+              </label>
+              <input
+                type="file"
+                id="fileUpload"
+                class="form-control border-danger"
+                accept=".csv"
+                multiple
+                (change)="onFileSelected($event)"
+              />
+              <div class="form-text text-muted">
+                You can select one or more CSV files.
+              </div>
+            </div>
+          </form>
+
+          <!-- Upload Button -->
+          <button
+            type="button"
+            class="btn btn-danger mt-3"
+            (click)="uploadFiles()"
+            [disabled]="selectedFiles.length === 0"
+          >
+            Upload Files
+          </button>
+
+          <!-- Uploaded Files List -->
+          <div class="mt-4" *ngIf="uploadedFiles.length > 0; else noFiles">
+            <h5 class="fw-bold mb-3 text-danger">Uploaded Files</h5>
+            <ul class="list-group">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-danger rounded-3 mt-2"
+                *ngFor="let file of uploadedFiles"
+              >
+                {{ file }}
+                <span class="badge bg-success">CSV</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Message when no files uploaded -->
+          <ng-template #noFiles>
+            <div class="mt-4 alert alert-danger">
+              No files uploaded yet. Please select your datasets.
+            </div>
+          </ng-template>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
