@@ -49,7 +49,6 @@ export class Cleaning implements OnInit {
     this.loadingFiles = true;
     this.errorMessage = '';
 
-    // Use full URL to XAMPP backend or proxy
     this.http.get<string[]>('http://localhost/MailDoctor/backend/list_csvs.php')
       .subscribe({
         next: (files) => {
@@ -77,16 +76,23 @@ export class Cleaning implements OnInit {
 
     this.cleaningResult = null;
 
-    this.http.post<any>('http://localhost/MailDoctor/backend/clean_csv.php', formData)
+    this.http.post<any>('http://127.0.0.1:8000/clean_csv', formData)
       .subscribe({
         next: (res) => {
           this.cleaningResult = res;
+
+          if (res.success) {
+            // Optional: scroll to result
+            setTimeout(() => {
+              const element = document.getElementById('resultSection');
+              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }
         },
         error: (err) => {
           console.error('Error cleaning file', err);
-          this.cleaningResult = { error: 'Failed to clean CSV. Check backend.' };
+          this.cleaningResult = { error: 'Failed to clean CSV. Check FastAPI server.' };
         }
       });
   }
-
 }

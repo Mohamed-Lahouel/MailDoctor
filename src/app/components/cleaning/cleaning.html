@@ -40,11 +40,36 @@
           </button>
 
           <!-- Feedback / Result -->
-          <div class="mt-4" *ngIf="cleaningResult">
+          <div class="mt-4" *ngIf="cleaningResult?.success" id="resultSection">
             <div class="alert alert-success">
               <strong>✅ Cleaning complete!</strong><br>
               Cleaned file: {{ cleaningResult.cleanedFile }}
             </div>
+
+            <!-- Download Link -->
+            <a
+              class="btn btn-outline-success mt-2"
+              [href]="'http://localhost/MailDoctor/backend/uploads/' + cleaningResult.cleanedFile"
+              download
+            >
+              ⬇️ Download Cleaned CSV
+            </a>
+
+            <!-- Counters -->
+            <!-- Counters -->
+<ul class="mt-3">
+  <li>Empty rows removed: {{ cleaningResult.counters.empty_removed }}</li>
+  <li>Spaces trimmed: {{ cleaningResult.counters.spaces_trimmed }}</li>
+  <li>Hidden characters removed: {{ cleaningResult.counters.hidden_chars_removed }}</li>
+  <li>Multiple spaces fixed: {{ cleaningResult.counters.multiple_spaces_fixed }}</li>
+  <li>Placeholders removed: {{ cleaningResult.counters.placeholders_removed }}</li>
+  <li>Duplicates removed: {{ cleaningResult.counters.duplicates_removed }}</li>
+</ul>
+
+          </div>
+
+          <div class="alert alert-danger mt-4" *ngIf="cleaningResult?.error">
+            {{ cleaningResult.error }}
           </div>
 
         </div>
