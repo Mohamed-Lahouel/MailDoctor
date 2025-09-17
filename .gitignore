@@ -43,3 +43,6 @@ Thumbs.db
 
 # PHP backend environment file
 backend/.env
+
+# PHP vendor folder (Composer dependencies)
+backend/vendor/
