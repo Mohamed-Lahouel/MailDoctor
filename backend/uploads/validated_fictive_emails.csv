@@ -1,0 +1,69 @@
+email,valid,reason
+gooduser@gmail.com,True,Valid syntax; Valid domain
+bademail@,False,Invalid syntax
+fake@fakedomainxyz.com,False,Valid syntax; Domain not found
+test@company.org,False,Valid syntax; DNS check failed: All nameservers failed to answer the query company.org. IN MX: Server Do53:8.8.8.8@53 answered SERVFAIL; Server Do53:8.8.4.4@53 answered SERVFAIL; Server Do53:1.1.1.1@53 answered SERVFAIL; Server Do53:1.0.0.1@53 answered SERVFAIL; Server Do53:9.9.9.9@53 answered SERVFAIL
+alice@yahoo.com,True,Valid syntax; Valid domain
+invalid.email@domain,False,Invalid syntax
+bob@outlook.com,True,Valid syntax; Valid domain
+no_at_sign.com,False,Invalid syntax
+user@nonexistent12345.com,False,Valid syntax; Domain not found
+mohamed.lahouel@esprit.tn,True,Valid syntax; Valid domain
+jane.doe@harvard.edu,True,Valid syntax; Valid domain
+john.smith@gmail.com,True,Valid syntax; Valid domain
+emma.watson@gmail.com,True,Valid syntax; Valid domain
+techguru@gmail.com,True,Valid syntax; Valid domain
+larry.king@outlook.com,True,Valid syntax; Valid domain
+susan.connor@outlook.com,True,Valid syntax; Valid domain
+mike.jordan@yahoo.com,True,Valid syntax; Valid domain
+sarah.connor@yahoo.com,True,Valid syntax; Valid domain
+secure.user@protonmail.com,True,Valid syntax; Valid domain
+private123@protonmail.com,True,Valid syntax; Valid domain
+ahmed.benali@esprit.tn,True,Valid syntax; Valid domain
+samar.haddad@esprit.tn,True,Valid syntax; Valid domain
+faculty.cs@esprit.tn,True,Valid syntax; Valid domain
+gooduser@gmail.com,True,Valid syntax; Valid domain
+bademail@,False,Invalid syntax
+fake@fakedomainxyz.com,False,Valid syntax; Domain not found
+test@company.org,False,Valid syntax; DNS check failed: All nameservers failed to answer the query company.org. IN MX: Server Do53:8.8.8.8@53 answered SERVFAIL; Server Do53:8.8.4.4@53 answered SERVFAIL; Server Do53:1.1.1.1@53 answered SERVFAIL; Server Do53:1.0.0.1@53 answered SERVFAIL; Server Do53:9.9.9.9@53 answered The DNS operation timed out.; Server Do53:9.9.9.9@53 answered SERVFAIL
+alice@yahoo.com,True,Valid syntax; Valid domain
+invalid.email@domain,False,Invalid syntax
+bob@outlook.com,True,Valid syntax; Valid domain
+no_at_sign.com,False,Invalid syntax
+user@nonexistent12345.com,False,Valid syntax; Domain not found
+mohamed.lahouel@esprit.tn,True,Valid syntax; Valid domain
+jane.doe@harvard.edu,True,Valid syntax; Valid domain
+john.smith@gml.com,True,Valid syntax; Valid domain
+emma.watson@glaim.com,False,Valid syntax; Domain has no MX records
+techguru@gnail.com,True,Valid syntax; Valid domain
+larry.king@outlok.com,True,Valid syntax; Valid domain
+susan.connor@outloook.com,True,Valid syntax; Valid domain
+mike.jordan@yaho.com,False,Valid syntax; Domain has no MX records
+sarah.connor@yaoo.com,False,Valid syntax; Domain has no MX records
+secure.user@protonml.com,True,Valid syntax; Valid domain
+private123@protonmaill.com,True,Valid syntax; Valid domain
+ahmed.benali@esrik.tn,False,Valid syntax; Domain not found
+samar.haddad@esprittn.com,False,Valid syntax; Domain not found
+faculty.cs@espritn.com,False,Valid syntax; Domain not found
+john.doe@gmail.cmo,False,Valid syntax; Domain not found
+emma.watson@gmail.con,False,Valid syntax; Domain not found
+techguru@gmail.col,False,Valid syntax; Domain not found
+larry.king@outlook.cmo,False,Valid syntax; Domain not found
+susan.connor@outlook.con,False,Valid syntax; Domain not found
+mike.jordan@yahoo.cmo,False,Valid syntax; Domain not found
+sarah.connor@yahoo.con,False,Valid syntax; Domain not found
+secure.user@protonmail.cmo,False,Valid syntax; Domain not found
+private123@protonmail.con,False,Valid syntax; Domain not found
+ahmed.benali@esprit.tn.,True,Valid syntax; Valid domain
+samar.haddad@esprit.tn1,False,Valid syntax; Domain not found
+faculty.cs@esprit.tncom,False,Valid syntax; Domain not found
+momhamed.com,False,Invalid syntax
+jane.doe@.com,False,Invalid syntax
+alice@@yahoo.com,False,Invalid syntax
+bob.outlook.com,False,Invalid syntax
+@gmail.com,False,Invalid syntax
+john..smith@gmail.com,True,Valid syntax; Valid domain
+susan.connor@outlook,False,Invalid syntax
+mike@.yahoo.com,False,Invalid syntax
+emma watson@gmail.com,False,Invalid syntax
+test@company..org,False,Valid syntax; DNS check failed: A DNS label is empty.

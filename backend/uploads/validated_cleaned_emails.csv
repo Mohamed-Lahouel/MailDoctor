@@ -1,0 +1,90 @@
+email,valid,reason
+example@gmail.com,True,Valid syntax; Valid domain
+test@yahoo.com,True,Valid syntax; Valid domain
+hello@outlook.com,True,Valid syntax; Valid domain
+gnail.com,False,Invalid syntax
+test1@gmail.com,True,Valid syntax; Valid domain
+test2@gmail.com,True,Valid syntax; Valid domain
+duplicate@gmail.com,True,Valid syntax; Valid domain
+user@hotmail.com,True,Valid syntax; Valid domain
+someone@yahoo.com,True,Valid syntax; Valid domain
+junkdata,False,Invalid syntax
+foo@bar.com,False,Valid syntax; Domain has no MX records
+john.doe@icloud.com,True,Valid syntax; Valid domain
+jane_doe@icloud.com,True,Valid syntax; Valid domain
+bademail@@gmail.com,False,Invalid syntax
+space@gmail.com,True,Valid syntax; Valid domain
+uppercase@gmail.com,True,Valid syntax; Valid domain
+invalid,False,Invalid syntax
+sample@company.com,False,Valid syntax; Domain has no MX records
+demo@company.com,False,Valid syntax; Domain has no MX records
+placeholder,False,Invalid syntax
+test@outlook.com,True,Valid syntax; Valid domain
+wrong@domain.com,True,Valid syntax; Valid domain
+hello.world@gmail.com,True,Valid syntax; Valid domain
+helloworld@gmail.com,True,Valid syntax; Valid domain
+contact@site.org,False,Valid syntax; Domain not found
+info@site.org,False,Valid syntax; Domain not found
+data@n/a,False,Invalid syntax
+admin@test.com,False,Valid syntax; Domain has no MX records
+random@random.com,False,Valid syntax; Domain has no MX records
+another@domain.com,True,Valid syntax; Valid domain
+address@hotmail.com,True,Valid syntax; Valid domain
+valid@email.com,True,Valid syntax; Valid domain
+example@email.com,True,Valid syntax; Valid domain
+duplicate2@yahoo.com,True,Valid syntax; Valid domain
+first.last@gmail.com,True,Valid syntax; Valid domain
+firstname.lastname@gmail.com,True,Valid syntax; Valid domain
+user1@gmail.com,True,Valid syntax; Valid domain
+user2@gmail.com,True,Valid syntax; Valid domain
+user3@gmail.com,True,Valid syntax; Valid domain
+email1@hotmail.com,True,Valid syntax; Valid domain
+email2@hotmail.com,True,Valid syntax; Valid domain
+email3@hotmail.com,True,Valid syntax; Valid domain
+email4@hotmail.com,True,Valid syntax; Valid domain
+userx@yahoo.com,True,Valid syntax; Valid domain
+usery@yahoo.com,True,Valid syntax; Valid domain
+userz@yahoo.com,True,Valid syntax; Valid domain
+wrong@yahoo.com,True,Valid syntax; Valid domain
+test3@outlook.com,True,Valid syntax; Valid domain
+test4@outlook.com,True,Valid syntax; Valid domain
+test5@outlook.com,True,Valid syntax; Valid domain
+test6@outlook.com,True,Valid syntax; Valid domain
+empty,False,Invalid syntax
+abc@xyz.com,True,Valid syntax; Valid domain
+foo@gmail.com,True,Valid syntax; Valid domain
+bar@gmail.com,True,Valid syntax; Valid domain
+baz@icloud.com,True,Valid syntax; Valid domain
+qux@icloud.com,True,Valid syntax; Valid domain
+user+spam@gmail.com,True,Valid syntax; Valid domain
+user+alias@yahoo.com,True,Valid syntax; Valid domain
+test-case@gmail.com,True,Valid syntax; Valid domain
+test_case@yahoo.com,True,Valid syntax; Valid domain
+long.email.address@gmail.com,True,Valid syntax; Valid domain
+short@em.com,True,Valid syntax; Valid domain
+duplicate3@aol.com,True,Valid syntax; Valid domain
+random_data,False,Invalid syntax
+name@domain.com,True,Valid syntax; Valid domain
+team@domain.com,True,Valid syntax; Valid domain
+support@domain.com,True,Valid syntax; Valid domain
+helpdesk@domain.com,True,Valid syntax; Valid domain
+info@domain.com,True,Valid syntax; Valid domain
+sales@domain.com,True,Valid syntax; Valid domain
+contact@domain.com,True,Valid syntax; Valid domain
+trash,False,Invalid syntax
+x@y.z,False,Valid syntax; Domain not found
+abc@hotmail.com,True,Valid syntax; Valid domain
+zyx@gmail.com,True,Valid syntax; Valid domain
+foo.bar@gmail.com,True,Valid syntax; Valid domain
+foo..bar@gmail.com,True,Valid syntax; Valid domain
+john_smith@yahoo.com,True,Valid syntax; Valid domain
+jane_smith@yahoo.com,True,Valid syntax; Valid domain
+username@domain.com,True,Valid syntax; Valid domain
+example123@domain.com,True,Valid syntax; Valid domain
+demo123@domain.com,True,Valid syntax; Valid domain
+tester@hotmail.com,True,Valid syntax; Valid domain
+trial@yahoo.com,True,Valid syntax; Valid domain
+check@check.com,True,Valid syntax; Valid domain
+wrong_email,False,Invalid syntax
+ddd,False,Invalid syntax
+dd,False,Invalid syntax

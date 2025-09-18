@@ -2,6 +2,8 @@ from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from services.cleaning import clean_csv_file
+from services.validation import validate_csv_file
+
 
 app = FastAPI()
 
@@ -47,5 +49,32 @@ async def clean_csv(
         "success": True,
         "cleanedFile": cleaned_filename,
         "rows_final": len(df),
+        "counters": counters
+    }
+
+@app.post("/validate_csv")
+async def validate_csv(
+    filename: str = Form(...),
+    syntax: str = Form("true"),
+    domain: str = Form("true"),
+    smtp: str = Form("false")
+):
+    filepath = os.path.join(UPLOAD_DIR, filename)
+    if not os.path.exists(filepath):
+        return {"success": False, "error": "File not found"}
+
+    options = {
+        "syntax": syntax.lower() == "true",
+        "domain": domain.lower() == "true",
+        "smtp": smtp.lower() == "true"
+    }
+
+    df, counters = validate_csv_file(filepath, options)
+    validated_filename = f"validated_{filename}"
+    df.to_csv(os.path.join(UPLOAD_DIR, validated_filename), index=False)
+
+    return {
+        "success": True,
+        "validatedFile": validated_filename,
         "counters": counters
     }

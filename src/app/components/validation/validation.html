@@ -1,0 +1,77 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow-lg border-0 rounded-3" style="background-color: #fff5f5;">
+        <div class="card-body p-5">
+
+          <!-- Title -->
+          <h2 class="fw-bold text-center mb-4 text-dark border-bottom pb-3">
+            Syntax Check & Validation
+          </h2>
+
+          <!-- Select File -->
+          <div class="mb-4">
+            <label for="fileSelect" class="form-label fw-semibold text-danger">
+              Choose a CSV File
+            </label>
+            <select
+              id="fileSelect"
+              class="form-select border-danger"
+              [(ngModel)]="selectedFile"
+            >
+              <option *ngFor="let file of uploadedFiles" [value]="file">
+                {{ file }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Validation Options -->
+          <div class="mb-4">
+  <label class="form-label fw-semibold text-danger">Validation Options</label>
+  <div class="form-check" *ngFor="let option of validationKeys">
+    <input class="form-check-input" type="checkbox" [id]="option" [(ngModel)]="validationOptions[option]">
+    <label class="form-check-label" [for]="option">{{ validationLabels[option] }}</label>
+  </div>
+</div>
+
+
+          <!-- Submit Button -->
+          <button type="button" class="btn btn-danger mt-3" (click)="validateFile()" [disabled]="!selectedFile">
+            Start Validation
+          </button>
+
+          <!-- Feedback / Result -->
+          <div class="mt-4" *ngIf="validationResult?.success" id="resultSection">
+            <div class="alert alert-success">
+              <strong>✅ Validation complete!</strong><br>
+              Validated file: {{ validationResult.validatedFile }}
+            </div>
+
+            <!-- Download Link -->
+            <a
+              class="btn btn-outline-success mt-2"
+              [href]="'http://localhost/MailDoctor/backend/uploads/' + validationResult.validatedFile"
+              download
+            >
+              ⬇️ Download Validated CSV
+            </a>
+
+            <!-- Counters -->
+            <ul class="mt-3">
+              <li>Total emails checked: {{ validationResult.counters.total }}</li>
+              <li>✅ Valid: {{ validationResult.counters.valid }}</li>
+              <li>⚠️ Risky: {{ validationResult.counters.risky }}</li>
+              <li>❌ Invalid: {{ validationResult.counters.invalid }}</li>
+            </ul>
+          </div>
+
+          <!-- Error -->
+          <div class="alert alert-danger mt-4" *ngIf="validationResult?.error">
+            {{ validationResult.error }}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@ import { Code } from './components/code/code';
 import { Profile } from './components/profile/profile';
 import { Upload } from './components/upload/upload';
 import { Cleaning } from './components/cleaning/cleaning';
+import { Validation } from './components/validation/validation';
 
 export const routes: Routes = [
   { path: '', component: Login },  // default route
@@ -20,6 +21,7 @@ export const routes: Routes = [
       { path: 'profile', component: Profile },
       { path: 'upload', component: Upload },
       { path: 'cleaning', component: Cleaning },
+      { path: 'validation', component: Validation },
 
     ]
   }
