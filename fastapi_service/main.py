@@ -88,15 +88,15 @@ async def correct_csv(filename: str = Form(...)):
         return {"success": False, "error": "File not found"}
 
     try:
-        # Call your domain correction function
-        corrected_df = correct_invalid_domains(filepath)
+        corrected_df, count = correct_invalid_domains(filepath)
         corrected_filename = f"corrected_{filename}"
         corrected_path = os.path.join(UPLOAD_DIR, corrected_filename)
         corrected_df.to_csv(corrected_path, index=False)
 
         return {
             "success": True,
-            "correctedFile": corrected_filename
+            "correctedFile": corrected_filename,
+            "correctionsCount": count   # 🔹 send back to Angular
         }
 
     except Exception as e:

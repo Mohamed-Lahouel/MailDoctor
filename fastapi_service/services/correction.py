@@ -21,26 +21,28 @@ def correct_domain_auto(email, cutoff=0.7):
 
 def correct_invalid_domains(filepath: str):
     df = pd.read_csv(filepath)
-    
-    # Ensure original_email column exists
+
     if "original_email" not in df.columns:
         df["original_email"] = df["email"]
-    
-    # Ensure reason column exists
+
     if "reason" not in df.columns:
         raise ValueError("CSV must contain 'reason' column from validation output")
-    
-    # Replace email column with corrected emails
+
     corrected_emails = []
+    corrections_count = 0
+
     for _, row in df.iterrows():
         email = row["email"]
         reason = row["reason"]
-        
+
         if "Domain" in reason or "MX" in reason or "not found" in reason:
-            corrected_emails.append(correct_domain_auto(email))
+            corrected_email = correct_domain_auto(email)
+            if corrected_email != email:
+                corrections_count += 1
+            corrected_emails.append(corrected_email)
         else:
             corrected_emails.append(email)
-    
-    df["email"] = corrected_emails  # <-- replace directly
-    
-    return df
+
+    df["email"] = corrected_emails
+    return df, corrections_count
+

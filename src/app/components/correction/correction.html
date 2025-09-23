@@ -36,21 +36,24 @@
           </button>
 
           <!-- Feedback / Result -->
-          <div class="mt-4" *ngIf="correctionResult?.success">
-            <div class="alert alert-success">
-              <strong>✅ Correction complete!</strong><br>
-              Corrected file: {{ correctionResult.correctedFile }}
+          <!-- Feedback / Result -->
+            <div class="mt-4" *ngIf="correctionResult?.success">
+              <div class="alert alert-success">
+                <strong>✅ Correction complete!</strong><br>
+                Corrected file: {{ correctionResult.correctedFile }}<br>
+                Corrected domains: {{ correctionResult.correctionsCount }}
+              </div>
+
+              <!-- Download Link -->
+              <a
+                class="btn btn-outline-success mt-2"
+                [href]="'http://localhost/MailDoctor/backend/uploads/' + correctionResult.correctedFile"
+                download
+              >
+                ⬇️ Download Corrected CSV
+              </a>
             </div>
 
-            <!-- Download Link -->
-            <a
-              class="btn btn-outline-success mt-2"
-              [href]="'http://localhost/MailDoctor/backend/uploads/' + correctionResult.correctedFile"
-              download
-            >
-              ⬇️ Download Corrected CSV
-            </a>
-          </div>
 
           <!-- Error -->
           <div class="alert alert-danger mt-4" *ngIf="errorMessage">
