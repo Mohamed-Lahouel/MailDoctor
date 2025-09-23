@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow-lg border-0 rounded-3" style="background-color: #fff5f5;">
+        <div class="card-body p-5">
+
+          <!-- Title -->
+          <h2 class="fw-bold text-center mb-4 text-dark border-bottom pb-3">
+            Domain Auto-Correction
+          </h2>
+
+          <!-- Select File -->
+          <div class="mb-4">
+            <label for="fileSelect" class="form-label fw-semibold text-danger">
+              Choose a CSV File
+            </label>
+            <select
+              id="fileSelect"
+              class="form-select border-danger"
+              [(ngModel)]="selectedFile"
+            >
+              <option *ngFor="let file of uploadedFiles" [value]="file">
+                {{ file }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="button"
+            class="btn btn-danger mt-3"
+            (click)="correctFile()"
+            [disabled]="!selectedFile"
+          >
+            Start Correction
+          </button>
+
+          <!-- Feedback / Result -->
+          <div class="mt-4" *ngIf="correctionResult?.success">
+            <div class="alert alert-success">
+              <strong>✅ Correction complete!</strong><br>
+              Corrected file: {{ correctionResult.correctedFile }}
+            </div>
+
+            <!-- Download Link -->
+            <a
+              class="btn btn-outline-success mt-2"
+              [href]="'http://localhost/MailDoctor/backend/uploads/' + correctionResult.correctedFile"
+              download
+            >
+              ⬇️ Download Corrected CSV
+            </a>
+          </div>
+
+          <!-- Error -->
+          <div class="alert alert-danger mt-4" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

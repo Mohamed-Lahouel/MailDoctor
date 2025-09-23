@@ -9,29 +9,25 @@ def clean_csv_file(filepath: str, options: dict):
 
     df["original_email"] = df["email"]
     counters = {
-    "empty_removed": 0,
-    "spaces_trimmed": 0,
-    "hidden_chars_removed": 0,
-    "multiple_spaces_fixed": 0,
-    "placeholders_removed": 0,
-    "duplicates_removed": 0,
-    "case_normalized": 0  # ← new counter
+        "empty_removed": 0,
+        "spaces_fixed": 0,          # unified counter for all space fixes
+        "hidden_chars_removed": 0,
+        "placeholders_removed": 0,
+        "duplicates_removed": 0,
+        "case_normalized": 0
     }
-
 
     # Remove empty rows
     if options.get("removeEmpty", True):
         before_empty = len(df)
         df = df.dropna(subset=["email"])
-        df = df[df["email"].str.strip() != ""]  # remove empty strings
+        df = df[df["email"].str.strip() != ""]
         counters["empty_removed"] += before_empty - len(df)
 
     # Clean emails
     def clean_email(email):
         if not isinstance(email, str) or email.strip() == "":
             return None
-
-        original_email = email
 
         # Remove quotes
         email = email.strip('"').strip("'")
@@ -40,7 +36,7 @@ def clean_csv_file(filepath: str, options: dict):
         if options.get("trimWhitespace", True):
             trimmed = email.strip()
             if trimmed != email:
-                counters["spaces_trimmed"] += 1
+                counters["spaces_fixed"] += 1
                 email = trimmed
 
         # Remove hidden characters
@@ -60,14 +56,11 @@ def clean_csv_file(filepath: str, options: dict):
         # Fix multiple spaces in local part only
         if options.get("fixMultipleSpaces", True):
             local, sep, domain = email.partition('@')
-            if sep == '@':  # ensure valid email format
+            if sep == '@':  
                 local_clean = re.sub(r"\s+", ".", local)
                 if local_clean != local:
-                    counters["multiple_spaces_fixed"] += 1
+                    counters["spaces_fixed"] += 1
                     email = f"{local_clean}@{domain}"
-            else:
-                # No '@' found, leave as is
-                pass
 
         # Remove placeholders
         if options.get("removePlaceholders", True):

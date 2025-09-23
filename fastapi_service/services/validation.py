@@ -77,17 +77,16 @@ def check_smtp(email: str, mx_records):
 # -----------------------------
 def validate_csv_file(filepath: str, options: dict):
     """
-    options: {
-        "syntax": True,
-        "domain": True,
-        "smtp": False
-    }
+    Validate emails in a CSV while preserving original_email column.
+    Returns a DataFrame with: email, original_email, valid, reason
     """
     df = pd.read_csv(filepath)
     if "email" not in df.columns:
         raise ValueError("CSV must contain 'email' column")
 
-    df["original_email"] = df["email"]
+    # Ensure original_email exists
+    if "original_email" not in df.columns:
+        df["original_email"] = df["email"]
 
     counters = {
         "total": 0,
@@ -97,7 +96,9 @@ def validate_csv_file(filepath: str, options: dict):
     }
 
     results = []
-    for email in df["email"]:
+    for idx, row in df.iterrows():
+        email = row["email"]
+        original_email = row["original_email"]
         counters["total"] += 1
         is_valid = True
         reason_list = []
@@ -134,6 +135,7 @@ def validate_csv_file(filepath: str, options: dict):
 
         results.append({
             "email": email,
+            "original_email": original_email,
             "valid": is_valid,
             "reason": "; ".join(reason_list)
         })
