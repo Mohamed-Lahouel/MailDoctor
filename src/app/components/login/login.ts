@@ -29,11 +29,23 @@ export class Login {
       .subscribe({
         next: (res) => {
           if (res.success) {
-            // 1️⃣ Store user info in localStorage
-            localStorage.setItem('user', JSON.stringify(res.user));
-
-            alert('Login successful! Welcome, ' + res.user.username);
-            this.router.navigate([res.redirect]);
+            // ✅ Clear uploads first
+            this.http.get('http://localhost/MailDoctor/backend/clear_uploads.php')
+              .subscribe({
+                next: () => {
+                  console.log('Uploads cleared successfully.');
+                },
+                error: (err) => {
+                  console.error('Error clearing uploads on login:', err);
+                  // Not critical → continue anyway
+                },
+                complete: () => {
+                  // ✅ Proceed with login flow after cleanup
+                  localStorage.setItem('user', JSON.stringify(res.user));
+                  alert('Login successful! Welcome, ' + res.user.username);
+                  this.router.navigate([res.redirect]);
+                }
+              });
           } else {
             this.errorMessage = res.message || 'Login failed';
             alert(this.errorMessage);

@@ -9,6 +9,7 @@ import { Profile } from './components/profile/profile';
 import { Upload } from './components/upload/upload';
 import { Cleaning } from './components/cleaning/cleaning';
 import { Validation } from './components/validation/validation';
+import { Correction } from './components/correction/correction';
 
 export const routes: Routes = [
   { path: '', component: Login },  // default route
@@ -22,6 +23,7 @@ export const routes: Routes = [
       { path: 'upload', component: Upload },
       { path: 'cleaning', component: Cleaning },
       { path: 'validation', component: Validation },
+      { path: 'correction', component: Correction },
 
     ]
   }

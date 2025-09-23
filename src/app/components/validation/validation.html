@@ -58,11 +58,20 @@
 
             <!-- Counters -->
             <ul class="mt-3">
-              <li>Total emails checked: {{ validationResult.counters.total }}</li>
-              <li>✅ Valid: {{ validationResult.counters.valid }}</li>
-              <li>⚠️ Risky: {{ validationResult.counters.risky }}</li>
-              <li>❌ Invalid: {{ validationResult.counters.invalid }}</li>
+              <li>
+                ✅ Valid (Passed syntax, domain, and SMTP checks): 
+                {{ validationResult.counters.valid }}
+              </li>
+              <li>
+                ⚠️ Risky (Syntax ok, but domain/DNS/SMTP issues detected): 
+                {{ validationResult.counters.risky }}
+              </li>
+              <li>
+                ❌ Invalid (Bad syntax or non-existent domain): 
+                {{ validationResult.counters.invalid }}
+              </li>
             </ul>
+
           </div>
 
           <!-- Error -->

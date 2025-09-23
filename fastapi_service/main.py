@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 from services.cleaning import clean_csv_file
 from services.validation import validate_csv_file
+from services.correction import correct_invalid_domains
 
 
 app = FastAPI()
@@ -78,3 +79,25 @@ async def validate_csv(
         "validatedFile": validated_filename,
         "counters": counters
     }
+
+
+@app.post("/correct_csv")
+async def correct_csv(filename: str = Form(...)):
+    filepath = os.path.join(UPLOAD_DIR, filename)
+    if not os.path.exists(filepath):
+        return {"success": False, "error": "File not found"}
+
+    try:
+        # Call your domain correction function
+        corrected_df = correct_invalid_domains(filepath)
+        corrected_filename = f"corrected_{filename}"
+        corrected_path = os.path.join(UPLOAD_DIR, corrected_filename)
+        corrected_df.to_csv(corrected_path, index=False)
+
+        return {
+            "success": True,
+            "correctedFile": corrected_filename
+        }
+
+    except Exception as e:
+        return {"success": False, "error": str(e)}
