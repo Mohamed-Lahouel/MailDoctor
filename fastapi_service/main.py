@@ -1,22 +1,34 @@
 from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 import os
+from dotenv import load_dotenv   # ✅ Add this line
+load_dotenv(dotenv_path="../backend/.env")  # adjust path if needed
+
+# Import your existing services
 from services.cleaning import clean_csv_file
 from services.validation import validate_csv_file
 from services.correction import correct_invalid_domains
 
+# ✅ Import the new Apify LinkedIn service router
+from services import apify_service
+
 
 app = FastAPI()
 
+# Allow CORS for Angular frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],   # in production, restrict this
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Path for uploads (PHP backend writes files here too)
 UPLOAD_DIR = "../backend/uploads"
+
+
+# ---------------- CSV Endpoints ---------------- #
 
 @app.post("/clean_csv")
 async def clean_csv(
@@ -52,6 +64,7 @@ async def clean_csv(
         "rows_final": len(df),
         "counters": counters
     }
+
 
 @app.post("/validate_csv")
 async def validate_csv(
@@ -96,8 +109,14 @@ async def correct_csv(filename: str = Form(...)):
         return {
             "success": True,
             "correctedFile": corrected_filename,
-            "correctionsCount": count   # 🔹 send back to Angular
+            "correctionsCount": count
         }
 
     except Exception as e:
         return {"success": False, "error": str(e)}
+
+
+# ---------------- Apify LinkedIn Endpoint ---------------- #
+
+# ✅ Include the Apify router here
+app.include_router(apify_service.router, prefix="/api")

@@ -1,0 +1,89 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow-lg border-0 rounded-3" style="background-color: #fff5f5;">
+        <div class="card-body p-5">
+
+          <!-- Title -->
+          <h2 class="fw-bold text-center mb-4 text-dark border-bottom pb-3">
+            LinkedIn Email Finder
+          </h2>
+
+          <!-- Search Term -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-danger">Name / Search Term</label>
+            <input type="text" class="form-control border-danger"
+                   [(ngModel)]="searchTerm"
+                   placeholder="Enter full name or keyword">
+          </div>
+
+          <!-- Search Button -->
+          <button class="btn btn-danger mt-3"
+                  (click)="fetchLinkedInUrls()"
+                  [disabled]="!searchTerm || loading">
+            🔍 Find LinkedIn Profiles
+          </button>
+
+          <!-- Loading -->
+          <div *ngIf="loading" class="mt-3 text-center">
+            <span class="text-danger fw-bold">Loading...</span>
+          </div>
+
+          <!-- Error Message -->
+          <div class="alert alert-danger mt-4" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+          <!-- LinkedIn Results Table -->
+          <div *ngIf="linkedinResults.length" class="mt-4">
+            <table class="table table-bordered table-hover">
+              <thead class="table-danger">
+                <tr>
+                  <th>Rank</th>
+                  <th>Info</th>
+                  <th>LinkedIn URL</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let result of linkedinResults"
+                    [class.table-active]="selectedResult === result">
+                  <td>{{ result.rank }}</td>
+                  <td>{{ result.info }}</td>
+                  <td><a [href]="result.url" target="_blank">{{ result.url }}</a></td>
+                  <td>
+                    <button class="btn btn-sm btn-success" (click)="selectResult(result)">
+                      Select
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Email Result -->
+          <div class="mt-4" *ngIf="foundEmail">
+            <div class="alert alert-success">
+              <strong>✅ Email Found!</strong><br>
+              <span>{{ foundEmail }}</span>
+            </div>
+
+            <button class="btn btn-outline-primary mt-2"
+                    (click)="addToDataset()">
+              ➕ Add to Dataset
+            </button>
+          </div>
+
+          <!-- Dataset List -->
+          <div class="mt-5" *ngIf="dataset.length">
+            <label class="form-label fw-semibold text-danger">Saved Dataset</label>
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let item of dataset">
+                {{ item.url }} → {{ item.email }}
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
