@@ -49,6 +49,21 @@
             <small *ngIf="company">Company: {{ company }}</small>
           </div>
 
+          <!-- Select Dataset File -->
+          <div class="mb-3" *ngIf="foundEmail">
+            <label for="datasetFile" class="form-label fw-semibold">Choose Dataset File</label>
+            <select id="datasetFile" class="form-select" [(ngModel)]="selectedDatasetFile">
+              <option *ngFor="let file of uploadedFiles" [value]="file">{{ file }}</option>
+            </select>
+          </div>
+
+          <!-- Add to Dataset Button -->
+          <button class="btn btn-success w-100 mt-2" 
+                  (click)="addToDatasetFile()" 
+                  [disabled]="!foundEmail || !selectedDatasetFile">
+            💾 Add to Selected Dataset
+          </button>
+
           <!-- Optional Saved Dataset -->
           <div *ngIf="dataset.length" class="mt-4">
             <label class="form-label fw-semibold">Saved Emails</label>

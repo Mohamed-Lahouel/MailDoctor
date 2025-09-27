@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { lastValueFrom } from 'rxjs';
   templateUrl: './enrichment.html',
   styleUrls: ['./enrichment.scss']
 })
-export class Enrichment {
+export class Enrichment implements OnInit {
   firstName: string = '';
   lastName: string = '';
   domain: string = '';
@@ -23,9 +23,28 @@ export class Enrichment {
   loading: boolean = false;
   dataset: { firstName: string; lastName: string; email: string; company: string | null }[] = [];
 
+  // Dataset file selection
+  uploadedFiles: string[] = [];
+  selectedDatasetFile: string = '';
+
   private hunterApiKey = '4b411764cdc2860e7caf6f5568ee1bfe9dfae2f6'; // replace with your key
 
   constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.loadUploadedFiles();
+  }
+
+  loadUploadedFiles() {
+    this.http.get<string[]>('http://localhost/MailDoctor/backend/list_csvs.php')
+      .subscribe({
+        next: (files) => {
+          this.uploadedFiles = files;
+          this.selectedDatasetFile = this.uploadedFiles[0] || '';
+        },
+        error: () => this.errorMessage = 'Failed to load CSV files.'
+      });
+  }
 
   async findEmail() {
     this.errorMessage = '';
@@ -42,7 +61,6 @@ export class Enrichment {
     this.loading = true;
     try {
       const url = `https://api.hunter.io/v2/email-finder?domain=${this.domain}&first_name=${this.firstName}&last_name=${this.lastName}&api_key=${this.hunterApiKey}`;
-
       const data: any = await lastValueFrom(this.http.get(url));
 
       if (data?.data?.email) {
@@ -61,6 +79,7 @@ export class Enrichment {
     }
   }
 
+  // Optional local dataset push
   addToDataset() {
     if (this.foundEmail) {
       const exists = this.dataset.some(
@@ -75,5 +94,23 @@ export class Enrichment {
         });
       }
     }
+  }
+
+  // Add to selected CSV file
+  addToDatasetFile() {
+    if (!this.foundEmail || !this.selectedDatasetFile) return;
+
+    const formData = new FormData();
+    formData.append('filename', this.selectedDatasetFile);
+    formData.append('firstName', this.firstName);
+    formData.append('lastName', this.lastName);
+    formData.append('email', this.foundEmail);
+    formData.append('company', this.company || '');
+
+    this.http.post('http://localhost/MailDoctor/backend/add_to_csv.php', formData)
+      .subscribe({
+        next: () => alert('✅ Email added to selected dataset file!'),
+        error: () => alert('❌ Failed to add email to file.')
+      });
   }
 }
