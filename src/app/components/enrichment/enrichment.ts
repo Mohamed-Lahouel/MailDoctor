@@ -12,60 +12,67 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./enrichment.scss']
 })
 export class Enrichment {
-  searchTerm: string = '';
-  linkedinResults: any[] = [];
-  selectedResult: any = null;
+  firstName: string = '';
+  lastName: string = '';
+  domain: string = '';
   foundEmail: string = '';
-  dataset: { url: string; email: string }[] = [];
+  score: number | null = null;
+  position: string | null = null;
+  company: string | null = null;
   errorMessage: string = '';
   loading: boolean = false;
+  dataset: { firstName: string; lastName: string; email: string; company: string | null }[] = [];
+
+  private hunterApiKey = '4b411764cdc2860e7caf6f5568ee1bfe9dfae2f6'; // replace with your key
 
   constructor(private http: HttpClient) {}
 
-  async fetchLinkedInUrls() {
+  async findEmail() {
     this.errorMessage = '';
-    this.linkedinResults = [];
-    this.selectedResult = null;
     this.foundEmail = '';
+    this.score = null;
+    this.position = null;
+    this.company = null;
+
+    if (!this.firstName || !this.lastName || !this.domain) {
+      this.errorMessage = 'Please fill in all fields.';
+      return;
+    }
+
     this.loading = true;
-
     try {
-      const data: any = await lastValueFrom(
-        this.http.post(`http://127.0.0.1:8000/api/find-linkedin`, {
-          queries: this.searchTerm
-        })
-      );
+      const url = `https://api.hunter.io/v2/email-finder?domain=${this.domain}&first_name=${this.firstName}&last_name=${this.lastName}&api_key=${this.hunterApiKey}`;
 
-      if (data.results && data.results.length > 0) {
-        this.linkedinResults = data.results;
+      const data: any = await lastValueFrom(this.http.get(url));
+
+      if (data?.data?.email) {
+        this.foundEmail = data.data.email;
+        this.score = data.data.score;
+        this.position = data.data.position;
+        this.company = data.data.company;
       } else {
-        this.errorMessage = data.error || 'No LinkedIn profiles found.';
+        this.errorMessage = 'No email found for this person.';
       }
     } catch (err) {
-      console.error('Fetch error:', err);
-      this.errorMessage = 'Error fetching LinkedIn URLs. Please try again.';
+      console.error('Hunter API error:', err);
+      this.errorMessage = 'Failed to fetch email. Try again later.';
     } finally {
       this.loading = false;
     }
   }
 
-  selectResult(result: any) {
-    this.selectedResult = result;
-    this.foundEmail = ''; // reset email when selecting a new row
-  }
-
-  async findEmail() {
-    if (!this.selectedResult) return;
-
-    // Placeholder: simulate email finding
-    this.foundEmail = `contact@${new URL(this.selectedResult.url).hostname}`;
-  }
-
   addToDataset() {
-    if (this.selectedResult && this.foundEmail) {
-      const exists = this.dataset.some(item => item.url === this.selectedResult.url);
+    if (this.foundEmail) {
+      const exists = this.dataset.some(
+        item => item.email === this.foundEmail && item.firstName === this.firstName
+      );
       if (!exists) {
-        this.dataset.push({ url: this.selectedResult.url, email: this.foundEmail });
+        this.dataset.push({
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.foundEmail,
+          company: this.company
+        });
       }
     }
   }

@@ -10,6 +10,7 @@ import { Upload } from './components/upload/upload';
 import { Cleaning } from './components/cleaning/cleaning';
 import { Validation } from './components/validation/validation';
 import { Correction } from './components/correction/correction';
+import { LinkedinSearch } from './components/linkedinsearch/linkedinsearch';
 import { Enrichment } from './components/enrichment/enrichment';
 
 export const routes: Routes = [
@@ -25,8 +26,11 @@ export const routes: Routes = [
       { path: 'cleaning', component: Cleaning },
       { path: 'validation', component: Validation },
       { path: 'correction', component: Correction },
-      { path: 'enrichment', component: Enrichment },
+      { path: 'linkedinsearch', component: LinkedinSearch },
+            { path: 'enrichment', component: Enrichment },
 
+
+    
     ]
   }
 ];
